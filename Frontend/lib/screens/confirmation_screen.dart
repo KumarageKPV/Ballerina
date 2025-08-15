@@ -1,16 +1,38 @@
+// lib/screens/confirmation_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/language_provider.dart';
 
 class ConfirmationScreen extends StatelessWidget {
   const ConfirmationScreen({super.key});
 
+  String _getText(String key, String lang) {
+    Map<String, Map<String, String>> texts = {
+      'English': {
+        'confirmed': 'Booking Confirmed!',
+        'scan': 'Scan this QR at the bus',
+      },
+      'Sinhala': {
+        'confirmed': 'වෙන්කිරීම තහවුරුයි!',
+        'scan': 'බස් එකේ මෙම QR ස්කෑන් කරන්න',
+      },
+      'Tamil': {
+        'confirmed': 'பதிவு உறுதிப்படுத்தப்பட்டது!',
+        'scan': 'பஸ்ஸில் இந்த QR ஐ ஸ்கேன் செய்',
+      },
+    };
+    return texts[lang]?[key] ?? texts['English']![key]!;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final lang = context.watch<LanguageProvider>().language;
     return Scaffold(
-      appBar: AppBar(title: const Text('Confirmation')),
+      appBar: AppBar(title: Text(_getText('confirmed', lang))),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.black, Colors.greenAccent],
+            colors: [Theme.of(context).scaffoldBackgroundColor, Theme.of(context).primaryColor],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -19,13 +41,12 @@ class ConfirmationScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Booking Confirmed!',
+              Text(
+                _getText('confirmed', lang),
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [Shadow(blurRadius: 15, color: Colors.greenAccent)],
+                  color: Theme.of(context).textTheme.bodyLarge!.color,
                 ),
               ),
               const SizedBox(height: 40),
@@ -35,14 +56,14 @@ class ConfirmationScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [BoxShadow(color: Colors.greenAccent, blurRadius: 10)],
+                  boxShadow: [BoxShadow(color: Theme.of(context).primaryColor, blurRadius: 10)],
                 ),
                 child: const Center(child: Text('QR Code Placeholder')),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Scan this QR at the bus',
-                style: TextStyle(color: Colors.white70, fontSize: 18),
+              Text(
+                _getText('scan', lang),
+                style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color, fontSize: 18),
               ),
             ],
           ),

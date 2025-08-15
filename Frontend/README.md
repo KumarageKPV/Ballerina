@@ -1,4 +1,4 @@
-# bus_seat_booking_mobile_app
+# online_bus_seat_booking_app
 
 A new Flutter project.
 

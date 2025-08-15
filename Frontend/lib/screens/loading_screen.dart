@@ -1,3 +1,4 @@
+// lib/screens/loading_screen.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 2), () {
-      // Simulate auth check; navigate to onboarding if not logged in
       Navigator.pushReplacementNamed(context, '/onboarding');
     });
   }
@@ -22,9 +22,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.black, Colors.blueAccent],
+            colors: [Theme.of(context).scaffoldBackgroundColor, Theme.of(context).primaryColor],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -33,23 +33,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              ),
+              CircularProgressIndicator(),
               SizedBox(height: 20),
               Text(
                 'Loading...',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10.0,
-                      color: Colors.blueAccent,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
                 ),
               ),
             ],
